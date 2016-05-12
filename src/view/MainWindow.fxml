@@ -19,10 +19,11 @@
     <RowConstraints maxHeight="384.0" minHeight="10.0" prefHeight="384.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Canvas onMouseClicked="#drawFigure" fx:id="canvas" height="450.0" width="450.0" />
+      <Canvas fx:id="backgroundCanvas" height="450.0" width="450.0" />
+      <Canvas fx:id="playerCanvas" height="450.0" layoutX="10.0" layoutY="-23.0" onMouseClicked="#drawFigure" width="450.0" />
       <VBox prefHeight="384.0" prefWidth="137.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#drawBoard" text="Clear Board">
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearBoard" prefHeight="25.0" prefWidth="100.0" text="Clear Board">
                <VBox.margin>
                   <Insets left="15.0" top="10.0" />
                </VBox.margin></Button>
@@ -31,9 +32,9 @@
                   <Insets left="15.0" top="25.0" />
                </VBox.margin>
             </Label>
-            <ColorPicker editable="true" fx:id="xColor">
+            <ColorPicker editable="false" onAction="#changeXColor" fx:id="xColor">
                <VBox.margin>
-                  <Insets left="15.0" right="5.0" top="10.0" />
+                  <Insets left="15.0" right="5.0" top="0.0" />
                </VBox.margin>
             </ColorPicker>
             <Label text="O - Color:">
@@ -41,11 +42,36 @@
                   <Insets left="15.0" top="25.0" />
                </VBox.margin>
             </Label>
-            <ColorPicker fx:id="oColor" editable="true">
+            <ColorPicker fx:id="oColor" editable="false" onAction="#changeOColor">
                <VBox.margin>
-                  <Insets left="15.0" right="5.0" top="10.0" />
+                  <Insets left="15.0" right="5.0" top="0.0" />
                </VBox.margin>
             </ColorPicker>
+             <Label text="Background Color:">
+                 <VBox.margin>
+                     <Insets left="15.0" top="25.0" />
+                 </VBox.margin>
+             </Label>
+             <ColorPicker fx:id="backgroundColor" editable="false" onAction="#changeBackgroundColor">
+                 <VBox.margin>
+                     <Insets left="15.0" right="5.0" top="0.0" />
+                 </VBox.margin>
+             </ColorPicker>
+             <Label text="Grid Color:">
+                 <VBox.margin>
+                     <Insets left="15.0" top="25.0" />
+                 </VBox.margin>
+             </Label>
+             <ColorPicker fx:id="gridColor" editable="false" onAction="#changeGridColor">
+                 <VBox.margin>
+                     <Insets left="15.0" right="5.0" top="0.0" />
+                 </VBox.margin>
+             </ColorPicker>
+            <Button mnemonicParsing="false" onAction="#resetColors" prefHeight="25.0" prefWidth="100.0" text="Reset to default">
+               <VBox.margin>
+                  <Insets left="15.0" top="25.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </children>

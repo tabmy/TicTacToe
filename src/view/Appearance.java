@@ -9,10 +9,24 @@ public class Appearance {
 
     private Color XColor;
     private Color OColor;
+    private Color gridColor = Color.BLACK;
+    private Color backgroundColor = Color.WHITE;
 
 
-    public Color getXColor;
-    public Color getOColor;
+    public Color getXColor(){
+        return XColor;
+    }
+    public Color getOColor(){
+        return OColor;
+    }
+
+    public Color getGridColor() {
+        return gridColor;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
 
     public void setXColor(Color newColor){
         XColor = newColor;
@@ -22,5 +36,12 @@ public class Appearance {
         OColor = newColor;
     }
 
+    public void setGridColor(Color gridColor) {
+        this.gridColor = gridColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
 }
