@@ -3,15 +3,18 @@ package view;
 import javafx.scene.paint.Color;
 
 /**
- * Created by Tommy on 12.05.2016.
+ * @author Abelsen, Tommy
  */
 public class Appearance {
 
     private Color XColor;
     private Color OColor;
-    private Color gridColor = Color.BLACK;
-    private Color backgroundColor = Color.WHITE;
+    private Color gridColor;
+    private Color backgroundColor;
 
+    /*
+        Getters
+    */
 
     public Color getXColor(){
         return XColor;
@@ -28,12 +31,16 @@ public class Appearance {
         return backgroundColor;
     }
 
-    public void setXColor(Color newColor){
-        XColor = newColor;
+    /*
+        Setters
+    */
+
+    public void setXColor(Color XColor){
+        this.XColor = XColor;
     }
 
-    public void setOColor(Color newColor){
-        OColor = newColor;
+    public void setOColor(Color OColor){
+        this.OColor = OColor;
     }
 
     public void setGridColor(Color gridColor) {
