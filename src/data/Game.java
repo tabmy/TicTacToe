@@ -5,13 +5,40 @@ package data;
  */
 public class Game {
 
-    private byte[][] gameboard;
+    //private char[][] gameMove = new char[3][3];
 
 
+    private char[][] gameMove = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}};
 
-    public void nextmove(byte move, byte x, byte y){
-        if(move == 0 || move == 1){
-            gameboard[x][y] = move;
+
+    public boolean setGameMove(int j, int i, char move){
+        if (gameMove[i][j] != 'X' && gameMove[i][j] != 'O'){
+            gameMove[i][j] = move;
+            return true;
         }
+        else return false;
+    }
+
+    public char[][] getGameMove() {
+        return gameMove;
+    }
+
+    @Override
+    public String toString(){
+        String retString = "";
+        int gameMoveLength = gameMove.length;
+
+        for(int i = 0; i < gameMoveLength; i++){
+            for (int j = 0; j < gameMoveLength; j++){
+                retString += gameMove[i][j];
+                if(j == 2)
+                    retString += "\r\n";
+            }
+        }
+
+        return retString;
     }
 }
