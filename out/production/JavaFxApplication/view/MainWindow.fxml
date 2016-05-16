@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="463.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="137.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="384.0" minHeight="10.0" prefHeight="384.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Canvas fx:id="backgroundCanvas" height="450.0" width="450.0" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin></Canvas>
+      <Canvas fx:id="playerCanvas" height="450.0" onMouseClicked="#drawFigure" width="450.0" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin></Canvas>
+      <VBox prefHeight="481.0" prefWidth="137.0" GridPane.columnIndex="1">
+         <children>
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearBoard" prefHeight="25.0" prefWidth="100.0" text="Clear Board">
+               <VBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </VBox.margin></Button>
+            <VBox>
+               <children>
+                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton"  />
+                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton"  />
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="54.0" text="X - Color:" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ColorPicker editable="false" onAction="#changeXColor" fx:id="xColor" />
+                  <Label text="O - Color:">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ColorPicker fx:id="oColor" editable="false" onAction="#changeOColor" />
+                   <Label text="Background Color:">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                   </Label>
+                   <ColorPicker fx:id="backgroundColor" editable="false" onAction="#changeBackgroundColor" />
+                   <Label text="Grid Color:">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                   </Label>
+                   <ColorPicker fx:id="gridColor" editable="false" onAction="#changeGridColor" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#resetColors" prefHeight="25.0" prefWidth="100.0" text="Reset to default">
+               <VBox.margin>
+                  <Insets left="15.0" top="25.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
