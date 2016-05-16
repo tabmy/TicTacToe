@@ -5,16 +5,12 @@ package data;
  */
 public class Game {
 
-    //private char[][] gameMove = new char[3][3];
-
-
     private char[][] gameMove = {
             {'-', '-', '-'},
             {'-', '-', '-'},
             {'-', '-', '-'}};
 
-
-    public boolean setGameMove(int j, int i, char move){
+    public boolean setGameMove(int i, int j, char move){
         if (gameMove[i][j] != 'X' && gameMove[i][j] != 'O'){
             gameMove[i][j] = move;
             return true;

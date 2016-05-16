@@ -12,13 +12,11 @@ public class Appearance {
     private Color gridColor;
     private Color backgroundColor;
 
-    /*
-        Getters
-    */
 
     public Color getXColor(){
         return XColor;
     }
+
     public Color getOColor(){
         return OColor;
     }
@@ -31,9 +29,6 @@ public class Appearance {
         return backgroundColor;
     }
 
-    /*
-        Setters
-    */
 
     public void setXColor(Color XColor){
         this.XColor = XColor;
