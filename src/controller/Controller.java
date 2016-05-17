@@ -65,6 +65,7 @@ public class Controller implements Initializable {
         resetColors();
     }
 
+
     private void changePlayerTurn(){
         if (playerTurn == 'X'){
             playerTurn = 'O';
@@ -80,20 +81,6 @@ public class Controller implements Initializable {
         }
     }
 
-   /* @FXML
-    public void setXturn(){
-        if (oTurnButton.isSelected()){
-            changePlayerTurn();
-        }
-    }
-
-    @FXML
-    public void setOturn(){
-        if (xTurnButton.isSelected()){
-            changePlayerTurn();
-        }
-    }
-    */
 
     @FXML
     public void drawFigure(MouseEvent event){

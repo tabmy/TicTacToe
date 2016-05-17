@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ToggleGroup?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="463.0" />
@@ -35,9 +36,12 @@
                   <Insets left="15.0" top="10.0" />
                </VBox.margin></Button>
             <VBox>
+                <fx:define>
+                    <ToggleGroup fx:id="toggleGroup"></ToggleGroup>
+                </fx:define>
                <children>
-                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton"  />
-                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton"  />
+                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton" toggleGroup="$toggleGroup" />
+                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton" toggleGroup="$toggleGroup"/>
                </children>
                <VBox.margin>
                   <Insets left="15.0" top="5.0" />
