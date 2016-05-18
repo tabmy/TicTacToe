@@ -65,7 +65,8 @@ public class Controller implements Initializable {
         resetColors();
     }
 
-    private void changePlayerTurn(){
+    @FXML
+    public void changePlayerTurn(){
         if (playerTurn == 'X'){
             playerTurn = 'O';
 
@@ -168,58 +169,95 @@ public class Controller implements Initializable {
 
     private void drawWinner(){
 
+        /*
+        { // Diagonal winner graphics.
 
-        { //(1,1) -> (3,3)
-            playerGc.setStroke(Color.BLACK);
-            playerGc.setLineWidth(12);
-            playerGc.rotate(45);
-            playerGc.strokeOval(25, -50, Math.sqrt(2) * 450 - 50, 100);
-            playerGc.setStroke(Color.GOLD);
-            playerGc.setLineWidth(8);
-            playerGc.strokeOval(25, -50, Math.sqrt(2) * 450 - 50, 100);
-            playerGc.rotate(-45);
+            { // Diagonal winner: (1,1) -> (3,3)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.rotate(45);
+                playerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
+                playerGc.rotate(-45);
+            }
+
+            { // Diagonal winner: (3, 1) -> (1, 3)
+                playerGc.rotate(135);
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+                playerGc.rotate(-135);
+            }
+
         }
-
-
-
-        { // (3, 1) -> (1, 3)
-            playerGc.rotate(-45);
-            playerGc.setStroke(Color.BLACK);
-            playerGc.setLineWidth(12);
-            playerGc.strokeOval(-299, 244, Math.sqrt(2) * 450 - 39, 150);
-            playerGc.setStroke(Color.GOLD);
-            playerGc.setLineWidth(8);
-            playerGc.strokeOval(-299, 244, Math.sqrt(2) * 450 - 39, 150);
-            playerGc.rotate(45);
-        }
-
 
         { // Horizontal winner graphics.
-            playerGc.setStroke(Color.BLACK);
-            playerGc.setLineWidth(12);
-            playerGc.strokeOval(10, 12.5, 430, 125); // (1, 1) -> (1, 3)
-            playerGc.strokeOval(10, 162.5, 430, 125); //(2, 1) -> (2, 3)
-            playerGc.strokeOval(10, 312.5, 430, 125); //(3, 1) -> (3, 3)
-            playerGc.setStroke(Color.GOLD);
-            playerGc.setLineWidth(8);
-            playerGc.strokeOval(10, 12.5, 430, 125);
-            playerGc.strokeOval(10, 162.5, 430, 125);
-            playerGc.strokeOval(10, 312.5, 430, 125);
-        }
 
+            {   // (1, 1) -> (1, 3)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(10, 12.5, 430, 125);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(10, 12.5, 430, 125);
+            }
+
+            {   //(2, 1) -> (2, 3)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(10, 162.5, 430, 125);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(10, 162.5, 430, 125);
+            }
+
+            {   //(3, 1) -> (3, 3)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(10, 312.5, 430, 125);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(10, 312.5, 430, 125);
+            }
+        }
 
         { // Vertical winner graphics
-            playerGc.setStroke(Color.BLACK);
-            playerGc.setLineWidth(12);
-            playerGc.strokeOval(12.5, 10, 125, 430); // (1, 1) -> (3, 1)
-            playerGc.strokeOval(162.5, 10, 125, 430);// (1, 2) -> (3, 2)
-            playerGc.strokeOval(312.5, 10, 125, 430);// (1, 3) -> (3, 3)
-            playerGc.setStroke(Color.GOLD);
-            playerGc.setLineWidth(8);
-            playerGc.strokeOval(12.5, 10, 125, 430);
-            playerGc.strokeOval(162.5, 10, 125, 430);
-            playerGc.strokeOval(312.5, 10, 125, 430);
+
+            {   // (1, 1) -> (3, 1)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(12.5, 10, 125, 430);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(12.5, 10, 125, 430);
+            }
+
+            {   // (1, 2) -> (3, 2)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(162.5, 10, 125, 430);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(162.5, 10, 125, 430);
+            }
+
+            {   // (1, 3) -> (3, 3)
+                playerGc.setStroke(Color.BLACK);
+                playerGc.setLineWidth(12);
+                playerGc.strokeOval(312.5, 10, 125, 430);
+                playerGc.setStroke(Color.GOLD);
+                playerGc.setLineWidth(8);
+                playerGc.strokeOval(312.5, 10, 125, 430);
+            }
+
         }
+        */
 
 
     }

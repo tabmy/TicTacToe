@@ -40,8 +40,8 @@
                     <ToggleGroup fx:id="toggleGroup"></ToggleGroup>
                 </fx:define>
                <children>
-                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton" toggleGroup="$toggleGroup" />
-                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton" toggleGroup="$toggleGroup"/>
+                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton" toggleGroup="$toggleGroup" onAction="#changePlayerTurn" />
+                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton" toggleGroup="$toggleGroup" onAction="#changePlayerTurn"/>
                </children>
                <VBox.margin>
                   <Insets left="15.0" top="5.0" />
