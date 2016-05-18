@@ -30,8 +30,9 @@ public class Game {
         for(int i = 0; i < gameMoveLength; i++){
             for (int j = 0; j < gameMoveLength; j++){
                 retString += gameMove[i][j];
-                if(j == 2)
+                if(j == 2) {
                     retString += "\r\n";
+                }
             }
         }
 
