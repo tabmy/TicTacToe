@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.ToggleGroup?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="463.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="137.0" />
@@ -25,10 +25,15 @@
          <GridPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
          </GridPane.margin></Canvas>
-      <Canvas fx:id="playerCanvas" height="450.0" onMouseClicked="#drawFigure" width="450.0" GridPane.valignment="TOP">
+      <Canvas fx:id="playerCanvas" height="450.0" width="450.0" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />
          </GridPane.margin></Canvas>
+      <Canvas fx:id="winnerCanvas" height="450.0" onMouseClicked="#drawFigure" width="450.0" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="5.0" top="5.0" />
+         </GridPane.margin>
+      </Canvas>
       <VBox prefHeight="481.0" prefWidth="137.0" GridPane.columnIndex="1">
          <children>
             <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearBoard" prefHeight="25.0" prefWidth="100.0" text="Clear Board">
@@ -37,11 +42,11 @@
                </VBox.margin></Button>
             <VBox>
                 <fx:define>
-                    <ToggleGroup fx:id="toggleGroup"></ToggleGroup>
+                    <ToggleGroup fx:id="toggleGroup" />
                 </fx:define>
                <children>
-                  <RadioButton mnemonicParsing="false" text="Player X's turn" fx:id="xTurnButton" toggleGroup="$toggleGroup" />
-                  <RadioButton mnemonicParsing="false" text="Player O's turn" fx:id="oTurnButton" toggleGroup="$toggleGroup"/>
+                  <RadioButton mnemonicParsing="false" onAction="#changePlayerTurn" text="Player X's turn" fx:id="xTurnButton" toggleGroup="$toggleGroup"/>
+                  <RadioButton mnemonicParsing="false" onAction="#changePlayerTurn" text="Player O's turn" fx:id="oTurnButton" toggleGroup="$toggleGroup"/>
                </children>
                <VBox.margin>
                   <Insets left="15.0" top="5.0" />

@@ -25,10 +25,13 @@ public class Controller implements Initializable {
     private char playerTurn = 'X'; // Set to X starting the game as default.
     private Game game;
 
+
     @FXML
     private Canvas backgroundCanvas;
     @FXML
     private Canvas playerCanvas;
+    @FXML
+    private Canvas winnerCanvas;
     @FXML
     private ColorPicker xColor;
     @FXML
@@ -44,16 +47,21 @@ public class Controller implements Initializable {
 
     private GraphicsContext bgGc;
     private GraphicsContext playerGc;
+    private GraphicsContext winnerGc;
     private Appearance appearance;
 
     private double firstRowCol;
     private double middleRowCol;
     private double lastRowCol;
 
+    private boolean hasWon = false;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bgGc = backgroundCanvas.getGraphicsContext2D();
         playerGc = playerCanvas.getGraphicsContext2D();
+        winnerGc = winnerCanvas.getGraphicsContext2D();
         appearance = new Appearance();
 
         firstRowCol = playerCanvas.getWidth()/6;
@@ -67,6 +75,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void changePlayerTurn(){
+
         if (playerTurn == 'X'){
             playerTurn = 'O';
 
@@ -83,25 +92,30 @@ public class Controller implements Initializable {
 
     @FXML
     public void drawFigure(MouseEvent event){
-        double x = event.getX();
-        double y = event.getY();
-        if (event.getButton() == MouseButton.PRIMARY && game.setGameMove(gamePos(y), gamePos(x), playerTurn)) {
-            playerGc.setLineWidth(10);
+        if(!hasWon) {
+            double x = event.getX();
+            double y = event.getY();
+            if (event.getButton() == MouseButton.PRIMARY && game.setGameMove(gamePos(y), gamePos(x), playerTurn)) {
+                playerGc.setLineWidth(10);
 
-            if (playerTurn == 'X') {
-                drawX(rowColPos(x), rowColPos(y));
+                if (playerTurn == 'X') {
+                    drawX(rowColPos(x), rowColPos(y));
+                } else if (playerTurn == 'O') {
+                    drawO(rowColPos(event.getX()), rowColPos(event.getY()));
+                }
+
+                changePlayerTurn();
+               // System.out.println(game);
             }
-            else if (playerTurn == 'O'){
-                drawO(rowColPos(event.getX()), rowColPos(event.getY()));
+
+            int[] winner = game.hasWon();
+            if (winner != null) {
+                hasWon = true;
+                for (int i : winner) {
+                    drawWinner(winner[i]);
+                }
             }
-
-            changePlayerTurn();
-            System.out.println(game);
         }
-        else if (event.getButton() == MouseButton.SECONDARY){
-            drawWinner();
-        }
-
     }
 
     private int gamePos(double x){
@@ -167,128 +181,140 @@ public class Controller implements Initializable {
         }
     }
 
-    private void drawWinner(){
+    private void drawWinner(int x){
 
-        /*
-        { // Diagonal winner graphics.
+        switch (x){
 
+            // Diagonal Winner graphics:
+
+            case 1:
             { // Diagonal winner: (1,1) -> (3,3)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.rotate(45);
-                playerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
-                playerGc.rotate(-45);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.rotate(45);
+                winnerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(25, -62.5, Math.sqrt(2) * 450 - 50, 125);
+                winnerGc.rotate(-45);
             }
+            break;
 
+            case 2:
             { // Diagonal winner: (3, 1) -> (1, 3)
-                playerGc.rotate(135);
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
-
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
-                playerGc.rotate(-135);
+                winnerGc.rotate(135);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+                winnerGc.rotate(-135);
             }
+            break;
 
-        }
+            // Horizontal winner graphics.
 
-        { // Horizontal winner graphics.
-
+            case 3:
             {   // (1, 1) -> (1, 3)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(10, 12.5, 430, 125);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(10, 12.5, 430, 125);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(10, 12.5, 430, 125);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(10, 12.5, 430, 125);
             }
+            break;
 
+            case 4:
             {   //(2, 1) -> (2, 3)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(10, 162.5, 430, 125);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(10, 162.5, 430, 125);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(10, 162.5, 430, 125);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(10, 162.5, 430, 125);
             }
+            break;
 
+            case 5:
             {   //(3, 1) -> (3, 3)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(10, 312.5, 430, 125);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(10, 312.5, 430, 125);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(10, 312.5, 430, 125);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(10, 312.5, 430, 125);
             }
-        }
+            break;
 
-        { // Vertical winner graphics
 
+             // Vertical winner graphics
+            case 6:
             {   // (1, 1) -> (3, 1)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(12.5, 10, 125, 430);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(12.5, 10, 125, 430);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(12.5, 10, 125, 430);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(12.5, 10, 125, 430);
             }
+            break;
 
+            case 7:
             {   // (1, 2) -> (3, 2)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(162.5, 10, 125, 430);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(162.5, 10, 125, 430);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(162.5, 10, 125, 430);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(162.5, 10, 125, 430);
             }
+            break;
 
+            case 8:
             {   // (1, 3) -> (3, 3)
-                playerGc.setStroke(Color.BLACK);
-                playerGc.setLineWidth(12);
-                playerGc.strokeOval(312.5, 10, 125, 430);
-                playerGc.setStroke(Color.GOLD);
-                playerGc.setLineWidth(8);
-                playerGc.strokeOval(312.5, 10, 125, 430);
+                winnerGc.setStroke(Color.BLACK);
+                winnerGc.setLineWidth(12);
+                winnerGc.strokeOval(312.5, 10, 125, 430);
+                winnerGc.setStroke(Color.GOLD);
+                winnerGc.setLineWidth(8);
+                winnerGc.strokeOval(312.5, 10, 125, 430);
             }
+            break;
 
         }
-        */
-
-
     }
 
     @FXML
-    public void changeXColor(Event xcolor){
+    public void changeXColor(){
        appearance.setXColor(xColor.getValue());
         drawAll('X');
     }
 
     @FXML
-    public void changeOColor(Event ocolor){
+    public void changeOColor(){
         appearance.setOColor(oColor.getValue());
         drawAll('O');
     }
 
     @FXML
-    public void changeBackgroundColor(Event bgcolor){
+    public void changeBackgroundColor(){
         appearance.setBackgroundColor(backgroundColor.getValue());
         drawBoard();
     }
 
     @FXML
-    public void changeGridColor(Event gridcolor){
+    public void changeGridColor(){
         appearance.setGridColor(gridColor.getValue());
         drawBoard();
     }
 
     @FXML
     public void clearBoard(){
-        playerGc.clearRect(0,0,500,500);
+        playerGc.clearRect(0,0,450,450);
+        winnerGc.clearRect(0,0,450,450);
+        hasWon = false;
         game = new Game();
     }
 

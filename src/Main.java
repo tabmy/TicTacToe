@@ -13,13 +13,7 @@ public class Main extends Application {
         primaryStage.setTitle("TicTacToe");
         primaryStage.setScene(new Scene(root));
 
-        /*
-        primaryStage.setMaxWidth(600);
-        primaryStage.setMinWidth(600);
-        primaryStage.setMaxHeight(450);
-        primaryStage.setMinHeight(450);
-        */
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
 
         primaryStage.show();
     }
