@@ -5,7 +5,6 @@ package controller;
  */
 
 import data.Game;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -111,7 +110,7 @@ public class Controller implements Initializable {
             int[] winner = game.hasWon();
             if (winner != null) {
                 hasWon = true;
-                for (int i : winner) {
+                for (int i = 0; i < winner.length; i++) {
                     drawWinner(winner[i]);
                 }
             }
@@ -250,6 +249,7 @@ public class Controller implements Initializable {
 
 
              // Vertical winner graphics
+
             case 6:
             {   // (1, 1) -> (3, 1)
                 winnerGc.setStroke(Color.BLACK);
