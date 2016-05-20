@@ -13,11 +13,11 @@ public class Appearance {
     private Color backgroundColor;
 
 
-    public Color getXColor(){
+    public Color getXColor() {
         return XColor;
     }
 
-    public Color getOColor(){
+    public Color getOColor() {
         return OColor;
     }
 
@@ -30,11 +30,11 @@ public class Appearance {
     }
 
 
-    public void setXColor(Color XColor){
+    public void setXColor(Color XColor) {
         this.XColor = XColor;
     }
 
-    public void setOColor(Color OColor){
+    public void setOColor(Color OColor) {
         this.OColor = OColor;
     }
 

@@ -1,7 +1,7 @@
 package controller;
 
 /**
- *  @author Abelsen, Tommy
+ * @author Abelsen, Tommy
  */
 
 import data.Game;
@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -20,10 +21,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-    private char playerTurn = 'X'; // Set to X starting the game as default.
-    private Game game;
-
 
     @FXML
     private Canvas backgroundCanvas;
@@ -43,18 +40,18 @@ public class Controller implements Initializable {
     private RadioButton xTurnButton;
     @FXML
     private RadioButton oTurnButton;
+    @FXML
+    private Label xWonTimes;
+    @FXML
+    private Label oWonTimes;
 
-    private GraphicsContext bgGc;
-    private GraphicsContext playerGc;
-    private GraphicsContext winnerGc;
+    private GraphicsContext bgGc, playerGc, winnerGc;
     private Appearance appearance;
+    private Game game;
 
-    private double firstRowCol;
-    private double middleRowCol;
-    private double lastRowCol;
-
+    private double firstRowCol, middleRowCol, lastRowCol;
     private boolean hasWon = false;
-
+    private char playerTurn = 'X'; // Set to X starting the game as default.
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,9 +60,9 @@ public class Controller implements Initializable {
         winnerGc = winnerCanvas.getGraphicsContext2D();
         appearance = new Appearance();
 
-        firstRowCol = playerCanvas.getWidth()/6;
-        middleRowCol = playerCanvas.getWidth()/2;
-        lastRowCol = playerCanvas.getWidth()/1.2;
+        firstRowCol = playerCanvas.getWidth() / 6;
+        middleRowCol = playerCanvas.getWidth() / 2;
+        lastRowCol = playerCanvas.getWidth() / 1.2;
 
         xTurnButton.setSelected(true);
 
@@ -73,15 +70,14 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void changePlayerTurn(){
+    public void changePlayerTurn() {
 
-        if (playerTurn == 'X'){
+        if (playerTurn == 'X') {
             playerTurn = 'O';
 
             xTurnButton.setSelected(false);
             oTurnButton.setSelected(true);
-        }
-        else if (playerTurn == 'O'){
+        } else if (playerTurn == 'O') {
             playerTurn = 'X';
 
             oTurnButton.setSelected(false);
@@ -90,104 +86,109 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void drawFigure(MouseEvent event){
-        if(!hasWon) {
-            double x = event.getX();
-            double y = event.getY();
-            if (event.getButton() == MouseButton.PRIMARY && game.setGameMove(gamePos(y), gamePos(x), playerTurn)) {
+    public void drawFigure(MouseEvent event) {
+        if (!hasWon) {
+            double xPos = event.getX();
+            double yPos = event.getY();
+            if (event.getButton() == MouseButton.PRIMARY && game.setGameMove(gamePos(yPos), gamePos(xPos), playerTurn)) {
                 playerGc.setLineWidth(10);
 
                 if (playerTurn == 'X') {
-                    drawX(rowColPos(x), rowColPos(y));
+                    drawCross(rowColPos(xPos), rowColPos(yPos));
                 } else if (playerTurn == 'O') {
-                    drawO(rowColPos(event.getX()), rowColPos(event.getY()));
+                    drawCircle(rowColPos(event.getX()), rowColPos(event.getY()));
                 }
 
                 changePlayerTurn();
-               // System.out.println(game);
+                // System.out.println(game);
             }
 
             int[] winner = game.hasWon();
             if (winner != null) {
                 hasWon = true;
-                for (int i = 0; i < winner.length; i++) {
-                    drawWinner(winner[i]);
+                for (int i : winner) {
+                    drawWinner(i);
                 }
             }
         }
     }
 
-    private int gamePos(double x){
-        if (x < 150)
+    private int gamePos(double d) {
+        if (d < 150)
             return 0;
-        else if (x > 300)
+        else if (d > 300)
             return 2;
         else return 1;
     }
 
-    private double rowColPos(double x){
-        if (x < 150)
+    private double rowColPos(double d) {
+        if (d < 150)
             return firstRowCol;
-        else if (x > 300)
+        else if (d > 300)
             return lastRowCol;
         else return middleRowCol;
     }
 
-    private void drawX(double x, double y){
+    private void drawCross(double x, double y) {
         playerGc.setStroke(appearance.getXColor());
-        playerGc.clearRect(x - 60,y - 60, 120, 120);
+        playerGc.clearRect(x - 60, y - 60, 120, 120);
         playerGc.strokeLine(x - 50, y - 50, x + 50, y + 50);
         playerGc.strokeLine(x - 50, y + 50, x + 50, y - 50);
     }
 
-    private void drawO(double x, double y){
+    private void drawCircle(double x, double y) {
         playerGc.setStroke(appearance.getOColor());
-        playerGc.clearRect(x - 60,y - 60, 120, 120);
-        playerGc.strokeOval(x - 50,y - 50 , 100, 100);
+        playerGc.clearRect(x - 60, y - 60, 120, 120);
+        playerGc.strokeOval(x - 50, y - 50, 100, 100);
     }
 
-    private void drawAll(char turn){
+    private void drawAll(char turn) {
         playerGc.setLineWidth(10);
         char[][] gameArray = game.getGameMove();
         double x = 0, y = 0;
 
-        for(int i = 0; i < gameArray.length; i++){
-            for (int j = 0; j < gameArray.length; j++){
-                if(gameArray[i][j] == turn){
-                    switch (j){
-                        case 0: x = firstRowCol;
+        for (int i = 0; i < gameArray.length; i++) {
+            for (int j = 0; j < gameArray.length; j++) {
+                if (gameArray[i][j] == turn) {
+                    switch (j) {
+                        case 0:
+                            x = firstRowCol;
                             break;
-                        case 1: x = middleRowCol;
+                        case 1:
+                            x = middleRowCol;
                             break;
-                        case 2: x = lastRowCol;
+                        case 2:
+                            x = lastRowCol;
                             break;
                     }
-                    switch (i){
-                        case 0: y = firstRowCol;
+                    switch (i) {
+                        case 0:
+                            y = firstRowCol;
                             break;
-                        case 1: y = middleRowCol;
+                        case 1:
+                            y = middleRowCol;
                             break;
-                        case 2: y = lastRowCol;
+                        case 2:
+                            y = lastRowCol;
                             break;
                     }
                     if (turn == 'X') {
-                        drawX(x, y);
-                    } else if(turn == 'O'){
-                        drawO(x, y);
+                        drawCross(x, y);
+                    } else if (turn == 'O') {
+                        drawCircle(x, y);
                     }
                 }
             }
         }
     }
 
-    private void drawWinner(int x){
+    private void drawWinner(int x) {
 
-        switch (x){
+        switch (x) {
 
             // Diagonal Winner graphics:
 
-            case 1:
-            { // Diagonal winner: (1,1) -> (3,3)
+            case 1: { // Diagonal winner: (1,1) -> (3,3)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.rotate(45);
@@ -199,23 +200,21 @@ public class Controller implements Initializable {
             }
             break;
 
-            case 2:
-            { // Diagonal winner: (3, 1) -> (1, 3)
+            case 2: { // Diagonal winner: (3, 1) -> (1, 3)
                 winnerGc.rotate(135);
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
-                winnerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+                winnerGc.strokeOval(-292.5, -380, Math.sqrt(2) * 450 - 50, 125);
                 winnerGc.setStroke(Color.GOLD);
                 winnerGc.setLineWidth(8);
-                winnerGc.strokeOval(-292.5,-380,Math.sqrt(2) * 450 - 50,125);
+                winnerGc.strokeOval(-292.5, -380, Math.sqrt(2) * 450 - 50, 125);
                 winnerGc.rotate(-135);
             }
             break;
 
             // Horizontal winner graphics.
 
-            case 3:
-            {   // (1, 1) -> (1, 3)
+            case 3: {   // (1, 1) -> (1, 3)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(10, 12.5, 430, 125);
@@ -225,8 +224,7 @@ public class Controller implements Initializable {
             }
             break;
 
-            case 4:
-            {   //(2, 1) -> (2, 3)
+            case 4: {   //(2, 1) -> (2, 3)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(10, 162.5, 430, 125);
@@ -236,8 +234,7 @@ public class Controller implements Initializable {
             }
             break;
 
-            case 5:
-            {   //(3, 1) -> (3, 3)
+            case 5: {   //(3, 1) -> (3, 3)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(10, 312.5, 430, 125);
@@ -247,11 +244,9 @@ public class Controller implements Initializable {
             }
             break;
 
+            // Vertical winner graphics
 
-             // Vertical winner graphics
-
-            case 6:
-            {   // (1, 1) -> (3, 1)
+            case 6: {   // (1, 1) -> (3, 1)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(12.5, 10, 125, 430);
@@ -261,8 +256,7 @@ public class Controller implements Initializable {
             }
             break;
 
-            case 7:
-            {   // (1, 2) -> (3, 2)
+            case 7: {   // (1, 2) -> (3, 2)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(162.5, 10, 125, 430);
@@ -272,8 +266,7 @@ public class Controller implements Initializable {
             }
             break;
 
-            case 8:
-            {   // (1, 3) -> (3, 3)
+            case 8: {   // (1, 3) -> (3, 3)
                 winnerGc.setStroke(Color.BLACK);
                 winnerGc.setLineWidth(12);
                 winnerGc.strokeOval(312.5, 10, 125, 430);
@@ -282,38 +275,60 @@ public class Controller implements Initializable {
                 winnerGc.strokeOval(312.5, 10, 125, 430);
             }
             break;
+        }
+        updateWinnerLabels();
+    }
 
+    private void updateWinnerLabels(){
+        byte xWonTimes = game.getxWonTimes();
+        byte oWonTimes = game.getoWonTimes();
+
+        if(xWonTimes != 1) {
+            this.xWonTimes.setText("X has won: " + xWonTimes + " times.");
+        } else if(xWonTimes == 1) {
+            this.xWonTimes.setText("X has won: " + xWonTimes + " time.");
+        }
+        if(oWonTimes != 1) {
+            this.oWonTimes.setText("O has won: " + oWonTimes + " times.");
+        } else if(oWonTimes == 1) {
+            this.oWonTimes.setText("O has won: " + oWonTimes + " time.");
         }
     }
 
     @FXML
-    public void changeXColor(){
-       appearance.setXColor(xColor.getValue());
+    public void resetCounters(){
+        game.clearWonTimes();
+        updateWinnerLabels();
+    }
+
+    @FXML
+    public void changeXColor() {
+        appearance.setXColor(xColor.getValue());
         drawAll('X');
     }
 
     @FXML
-    public void changeOColor(){
+    public void changeOColor() {
         appearance.setOColor(oColor.getValue());
         drawAll('O');
     }
 
     @FXML
-    public void changeBackgroundColor(){
+    public void changeBackgroundColor() {
         appearance.setBackgroundColor(backgroundColor.getValue());
         drawBoard();
     }
 
     @FXML
-    public void changeGridColor(){
+    public void changeGridColor() {
         appearance.setGridColor(gridColor.getValue());
         drawBoard();
     }
 
     @FXML
-    public void clearBoard(){
-        playerGc.clearRect(0,0,450,450);
-        winnerGc.clearRect(0,0,450,450);
+    public void clearBoard() {
+        playerGc.clearRect(0, 0, 450, 450);
+        winnerGc.clearRect(0, 0, 450, 450);
         hasWon = false;
         game = new Game();
     }
@@ -325,15 +340,15 @@ public class Controller implements Initializable {
         bgGc.setLineWidth(3);
 
         bgGc.fillRect(0, 0, 450, 450); // Background color of the board
-        bgGc.strokeRect(0,0,450,450); // Grid outline of the board
-        bgGc.strokeLine(150,3,150,450); // First Vertical line
-        bgGc.strokeLine(300,3,300,450); // Second vertical line
+        bgGc.strokeRect(0, 0, 450, 450); // Grid outline of the board
+        bgGc.strokeLine(150, 3, 150, 450); // First Vertical line
+        bgGc.strokeLine(300, 3, 300, 450); // Second vertical line
         bgGc.strokeLine(0, 150, 450, 150); // First Horizontal line
         bgGc.strokeLine(0, 300, 450, 300); // Second Horizontal line
     }
 
     @FXML
-    public void resetColors(){
+    public void resetColors() {
         appearance.setXColor(Color.BLACK);
         appearance.setOColor(Color.BLACK);
         appearance.setBackgroundColor(Color.WHITE);
