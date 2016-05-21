@@ -4,7 +4,8 @@ package controller;
  * @author Abelsen, Tommy
  */
 
-import data.Game;
+
+import data.TttGame;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -15,12 +16,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import view.Appearance;
+import view.TttAppearance;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class TttController implements Initializable {
 
     @FXML
     private Canvas backgroundCanvas;
@@ -46,8 +47,8 @@ public class Controller implements Initializable {
     private Label oWonTimes;
 
     private GraphicsContext bgGc, playerGc, winnerGc;
-    private Appearance appearance;
-    private Game game;
+    private TttAppearance appearance;
+    private TttGame game;
 
     private double firstRowCol, middleRowCol, lastRowCol;
     private boolean hasWon = false;
@@ -58,7 +59,7 @@ public class Controller implements Initializable {
         bgGc = backgroundCanvas.getGraphicsContext2D();
         playerGc = playerCanvas.getGraphicsContext2D();
         winnerGc = winnerCanvas.getGraphicsContext2D();
-        appearance = new Appearance();
+        appearance = new TttAppearance();
 
         firstRowCol = playerCanvas.getWidth() / 6;
         middleRowCol = playerCanvas.getWidth() / 2;
@@ -91,7 +92,6 @@ public class Controller implements Initializable {
             double xPos = event.getX();
             double yPos = event.getY();
             if (event.getButton() == MouseButton.PRIMARY && game.setGameMove(gamePos(yPos), gamePos(xPos), playerTurn)) {
-                playerGc.setLineWidth(10);
 
                 if (playerTurn == 'X') {
                     drawCross(rowColPos(xPos), rowColPos(yPos));
@@ -100,14 +100,14 @@ public class Controller implements Initializable {
                 }
 
                 changePlayerTurn();
-                // System.out.println(game);
-            }
+                //System.out.println(game);
 
-            int[] winner = game.hasWon();
-            if (winner != null) {
-                hasWon = true;
-                for (int i : winner) {
-                    drawWinner(i);
+                int[] winner = game.hasWon();
+                if (winner != null) {
+                    hasWon = true;
+                    for (int i : winner) {
+                        drawWinner(i);
+                    }
                 }
             }
         }
@@ -131,6 +131,7 @@ public class Controller implements Initializable {
 
     private void drawCross(double x, double y) {
         playerGc.setStroke(appearance.getXColor());
+        playerGc.setLineWidth(10);
         playerGc.clearRect(x - 60, y - 60, 120, 120);
         playerGc.strokeLine(x - 50, y - 50, x + 50, y + 50);
         playerGc.strokeLine(x - 50, y + 50, x + 50, y - 50);
@@ -138,6 +139,7 @@ public class Controller implements Initializable {
 
     private void drawCircle(double x, double y) {
         playerGc.setStroke(appearance.getOColor());
+        playerGc.setLineWidth(10);
         playerGc.clearRect(x - 60, y - 60, 120, 120);
         playerGc.strokeOval(x - 50, y - 50, 100, 100);
     }
@@ -279,24 +281,24 @@ public class Controller implements Initializable {
         updateWinnerLabels();
     }
 
-    private void updateWinnerLabels(){
+    private void updateWinnerLabels() {
         byte xWonTimes = game.getxWonTimes();
         byte oWonTimes = game.getoWonTimes();
 
-        if(xWonTimes != 1) {
+        if (xWonTimes != 1 && xWonTimes >= 0) {
             this.xWonTimes.setText("X has won: " + xWonTimes + " times.");
-        } else if(xWonTimes == 1) {
+        } else if (xWonTimes == 1) {
             this.xWonTimes.setText("X has won: " + xWonTimes + " time.");
         }
-        if(oWonTimes != 1) {
+        if (oWonTimes != 1 && oWonTimes >= 0) {
             this.oWonTimes.setText("O has won: " + oWonTimes + " times.");
-        } else if(oWonTimes == 1) {
+        } else if (oWonTimes == 1) {
             this.oWonTimes.setText("O has won: " + oWonTimes + " time.");
         }
     }
 
     @FXML
-    public void resetCounters(){
+    public void resetCounters() {
         game.clearWonTimes();
         updateWinnerLabels();
     }
@@ -330,7 +332,7 @@ public class Controller implements Initializable {
         playerGc.clearRect(0, 0, 450, 450);
         winnerGc.clearRect(0, 0, 450, 450);
         hasWon = false;
-        game = new Game();
+        game = new TttGame();
     }
 
     @FXML

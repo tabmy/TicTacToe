@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
           prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="controller.Controller">
+          fx:controller="controller.TttController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="463.0"/>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="137.0"/>
@@ -98,11 +98,11 @@
             </Label>
             <Button onAction="#resetCounters" prefHeight="25.0" prefWidth="100.0" text="Reset Counters">
                 <VBox.margin>
-                    <Insets right="10.0" top="20.0"/>
+                    <Insets right="10.0" top="10.0"/>
                 </VBox.margin>
             </Button>
             <VBox.margin>
-                <Insets left="10.0" right="10.0" top="25.0"/>
+                <Insets left="10.0" right="10.0" top="35.0"/>
             </VBox.margin>
         </VBox>
         <GridPane.margin>

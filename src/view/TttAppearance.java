@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * @author Abelsen, Tommy
  */
-public class Appearance {
+public class TttAppearance {
 
     private Color XColor;
     private Color OColor;

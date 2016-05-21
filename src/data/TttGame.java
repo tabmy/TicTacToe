@@ -1,11 +1,9 @@
 package data;
 
-import javafx.fxml.FXML;
-
 /**
  * @author Abelsen, Tommy
  */
-public class Game {
+public class TttGame {
 
     private static byte xWonTimes = 0;
     private static byte oWonTimes = 0;
@@ -30,7 +28,7 @@ public class Game {
     public int[] hasWon() {
         int winner[] = checkForWinner();
 
-        for (int i = 0; i < winner.length; i++) {
+        for (int i = 0; i < winner.length; i++){
             if (winner[i] > 0) {
                 //System.out.println(winner[i] + "\n");
                 return winner;
@@ -53,7 +51,7 @@ public class Game {
                 x += 1;
                 if (gameMove[0][0] == 'X') {
                     tempXwon++;
-                } else if (gameMove[0][0] == 'O'){
+                } else if (gameMove[0][0] == 'O') {
                     tempOwon++;
                 }
             }
@@ -65,7 +63,7 @@ public class Game {
                 x += 1;
                 if (gameMove[2][0] == 'X') {
                     tempXwon++;
-                } else if (gameMove[2][0] == 'O'){
+                } else if (gameMove[2][0] == 'O') {
                     tempOwon++;
                 }
             }
@@ -79,7 +77,7 @@ public class Game {
                     x += 1;
                     if (gameMove[i][0] == 'X') {
                         tempXwon++;
-                    } else if (gameMove[i][0] == 'O'){
+                    } else if (gameMove[i][0] == 'O') {
                         tempOwon++;
                     }
                 }
@@ -94,14 +92,14 @@ public class Game {
                     x += 1;
                     if (gameMove[0][i] == 'X') {
                         tempXwon++;
-                    } else if (gameMove[0][i] == 'O'){
+                    } else if (gameMove[0][i] == 'O') {
                         tempOwon++;
                     }
                 }
             }
         }
         if (tempXwon > tempOwon) xWonTimes++;
-        else if(tempOwon > tempXwon) oWonTimes++;
+        else if (tempOwon > tempXwon) oWonTimes++;
         if (xWonTimes < 0) xWonTimes = 0;
         if (oWonTimes < 0) oWonTimes = 0;
         return retInt;
@@ -116,7 +114,7 @@ public class Game {
     }
 
     public void clearWonTimes() {
-        xWonTimes =0;
+        xWonTimes = 0;
         oWonTimes = 0;
     }
 
