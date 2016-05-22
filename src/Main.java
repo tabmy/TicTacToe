@@ -9,8 +9,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        /*
         Parent root = FXMLLoader.load(getClass().getResource("/view/TicTacToeGame.fxml"));
         primaryStage.setTitle("TicTacToe");
+        */
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Connect4Game.fxml"));
         primaryStage.setScene(new Scene(root));
 
         primaryStage.setResizable(false);
