@@ -14,6 +14,8 @@ public class Main extends Application {
         primaryStage.setTitle("TicTacToe");
         */
         Parent root = FXMLLoader.load(getClass().getResource("/view/Connect4Game.fxml"));
+        primaryStage.setTitle("Connect 4");
+
         primaryStage.setScene(new Scene(root));
 
         primaryStage.setResizable(false);

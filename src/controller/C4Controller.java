@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -29,11 +31,94 @@ public class C4Controller implements Initializable{
         playerGc = playerCanvas.getGraphicsContext2D();
 
 
-        drawBackground();
+        drawBoard();
     }
 
+    @FXML
+    public void drawFigure(MouseEvent mouseEvent){
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            double X = mouseEvent.getX();
+            double Y = mouseEvent.getY();
 
-    public void drawBackground(){
+            playerGc.setStroke(Color.RED);
+            playerGc.setLineWidth(5);
+            playerGc.strokeOval(getXPos(X) - 5, getYPos(Y) - 5, 10, 10);
+
+            System.out.println("x: " + mouseEvent.getX() + "\ny: " + mouseEvent.getY() + "\n");
+
+        }
+    }
+
+    private double getXPos(double x){
+        double width = playerCanvas.getWidth();
+
+        if (width == 0)  x++;
+
+        if (x < width/7){
+            System.out.println(width/7 * 0.5);
+            return width/7 * 0.5;
+        }
+        else if (x < width/7 * 2){
+            System.out.println(width/7 * 1.5);
+            return width/7 * 1.5;
+        }
+        else if (x < width/7 * 3){
+            System.out.println(width/7 * 2.5);
+            return width/7 * 2.5;
+        }
+        else if (x < width/7 * 4){
+            System.out.println(width/7 * 3.5);
+            return width/7 * 3.5;
+        }
+        else if (x < width/7 * 5){
+            System.out.println(width/7 * 4.5);
+            return width/7 * 4.5;
+        }
+        else if (x < width/7 * 6){
+            System.out.println(width/7 * 5.5);
+            return width/7 * 5.5;
+        }
+        else if (x < width/7 * 7){
+            System.out.println(width/7 * 6.5);
+            return width/7 * 6.5;
+        }
+
+        return x;
+    }
+
+    private double getYPos(double y){
+        double height = playerCanvas.getHeight();
+
+        if (y == 0) y++;
+
+        if (y < height/6 * 1.05){
+            return height/6 * 0.5;
+        }
+        else if (y < height/6 * 2.05) {
+            return height / 6 * 1.5;
+        }
+        else if (y < height/6 * 3.05){
+            return height/6 * 2.5;
+        }
+        else if (y < height/6 * 4.05){
+            return height/6 * 3.5;
+        }
+        else if (y < height/6 * 5.05){
+            return height/6 * 4.5;
+        }
+        else if (y < height/6 * 6.05){
+            return height/6 * 5.5;
+        }
+
+        return y;
+    }
+
+    @FXML
+    public void clearBoard(){
+        playerGc.clearRect(0,0,playerCanvas.getWidth(), playerCanvas.getHeight());
+    }
+
+    public void drawBoard(){
         double height = backgroundCanvas.getHeight();
         double width = backgroundCanvas.getWidth();
         int rows = 6;
@@ -53,6 +138,5 @@ public class C4Controller implements Initializable{
             backgroundGc.strokeLine((width/columns) * i, lineWidth, (width/columns) * i, height - lineWidth);
         }   backgroundGc.strokeLine(width - lineWidth, lineWidth, width - lineWidth, height - lineWidth);
     }
-
 
 }

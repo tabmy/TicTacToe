@@ -20,7 +20,7 @@
   </rowConstraints>
    <children>
       <Canvas fx:id="backgroundCanvas" height="300.0" width="350.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-      <Canvas fx:id="playerCanvas" height="300.0" width="350.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+      <Canvas fx:id="playerCanvas" onMouseClicked="#drawFigure" height="300.0" width="350.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
             <VBox>
@@ -29,7 +29,7 @@
                   <Label text="Label" />
                </children>
             </VBox>
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" onAction="#clearBoard" />
          </children>
       </HBox>
    </children>

@@ -86,7 +86,7 @@ public class TttController implements Initializable {
         }
     }
 
-    @FXML
+
     public void drawFigure(MouseEvent event) {
         if (!hasWon) {
             double xPos = event.getX();
