@@ -1,5 +1,6 @@
 package controller;
 
+import data.C4Game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
  */
 public class C4Controller implements Initializable{
 
+    private boolean playerTurn;
 
     @FXML
     private Canvas backgroundCanvas;
@@ -24,14 +26,21 @@ public class C4Controller implements Initializable{
 
     private GraphicsContext backgroundGc;
     private GraphicsContext playerGc;
+    private C4Game game;
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         backgroundGc = backgroundCanvas.getGraphicsContext2D();
         playerGc = playerCanvas.getGraphicsContext2D();
+        game = new C4Game();
 
+        game.fillGameBoard();
 
         drawBoard();
+    }
+
+    private void changePlayerTurn(){
+        playerTurn = !playerTurn;
     }
 
     @FXML
@@ -40,56 +49,50 @@ public class C4Controller implements Initializable{
             double X = mouseEvent.getX();
             double Y = mouseEvent.getY();
 
-            playerGc.setStroke(Color.RED);
-            playerGc.setLineWidth(5);
-            playerGc.strokeOval(getXPos(X) - 5, getYPos(Y) - 5, 10, 10);
+            if(playerTurn) {
+                playerGc.setFill(Color.DARKRED);
+            }else{
+                playerGc.setFill(Color.DARKBLUE);
+            }
+            playerGc.clearRect(getXPos(X)- 25 , getYPos(Y) - 25, 50, 50);
+            playerGc.fillOval(getXPos(X) - 25, getYPos(Y) - 25, 50, 50);
 
-            System.out.println("x: " + mouseEvent.getX() + "\ny: " + mouseEvent.getY() + "\n");
-
+            //System.out.println("x: " + mouseEvent.getX() + "\ny: " + mouseEvent.getY() + "\n");
+            changePlayerTurn();
+            System.out.println(game);
         }
     }
 
     private double getXPos(double x){
         double width = playerCanvas.getWidth();
 
-        if (width == 0)  x++;
-
         if (x < width/7){
-            System.out.println(width/7 * 0.5);
             return width/7 * 0.5;
         }
         else if (x < width/7 * 2){
-            System.out.println(width/7 * 1.5);
             return width/7 * 1.5;
         }
         else if (x < width/7 * 3){
-            System.out.println(width/7 * 2.5);
             return width/7 * 2.5;
         }
         else if (x < width/7 * 4){
-            System.out.println(width/7 * 3.5);
             return width/7 * 3.5;
         }
         else if (x < width/7 * 5){
-            System.out.println(width/7 * 4.5);
             return width/7 * 4.5;
         }
         else if (x < width/7 * 6){
-            System.out.println(width/7 * 5.5);
             return width/7 * 5.5;
         }
         else if (x < width/7 * 7){
-            System.out.println(width/7 * 6.5);
             return width/7 * 6.5;
         }
 
-        return x;
+        else return x;
     }
 
     private double getYPos(double y){
         double height = playerCanvas.getHeight();
-
-        if (y == 0) y++;
 
         if (y < height/6 * 1.05){
             return height/6 * 0.5;
@@ -110,7 +113,7 @@ public class C4Controller implements Initializable{
             return height/6 * 5.5;
         }
 
-        return y;
+        else return y;
     }
 
     @FXML
@@ -124,19 +127,21 @@ public class C4Controller implements Initializable{
         int rows = 6;
         int columns = 7;
         double lineWidth = 3;
-        backgroundGc.setFill(Color.WHITE);
+
+        backgroundGc.setFill(Color.GREY);
         backgroundGc.setStroke(Color.BLACK);
         backgroundGc.setLineWidth(lineWidth);
-        backgroundGc.fillRect(0,0,250,250);
+        backgroundGc.fillRect(0, 0, width, height);
 
         for(int i = 0; i < rows; i++){
-            backgroundGc.strokeLine(0, (height/rows) * i + lineWidth, width, (height/rows) * i + lineWidth);
+            backgroundGc.strokeLine(0, (height/rows) * i , width, (height/rows) * i);
         }
-        backgroundGc.strokeLine(0, height - lineWidth, width, height - lineWidth);
+        backgroundGc.strokeLine(0, height, width, height);
 
         for(int i = 0; i < columns; i++){
-            backgroundGc.strokeLine((width/columns) * i, lineWidth, (width/columns) * i, height - lineWidth);
-        }   backgroundGc.strokeLine(width - lineWidth, lineWidth, width - lineWidth, height - lineWidth);
+            backgroundGc.strokeLine((width/columns) * i, 0, (width/columns) * i, height);
+        }
+        backgroundGc.strokeLine(width , 0, width , height );
     }
 
 }
