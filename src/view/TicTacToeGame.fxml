@@ -4,6 +4,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
           prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="controller.TttController">
@@ -24,7 +25,9 @@
             <Insets left="5.0" right="5.0" top="5.0"/>
         </GridPane.margin>
     </Canvas>
-    <Canvas fx:id="winnerCanvas" height="450.0" onMouseClicked="#drawFigure" width="450.0" GridPane.valignment="TOP">
+    <Canvas fx:id="winnerCanvas" height="450.0" onMouseClicked="#drawFigure" width="450.0" GridPane.valignment="TOP"><cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>
         <GridPane.margin>
             <Insets left="5.0" right="5.0" top="5.0"/>
         </GridPane.margin>
@@ -32,8 +35,11 @@
     <VBox id="menuVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           prefHeight="450.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER"
           GridPane.valignment="TOP">
-        <Button id="clearButton" mnemonicParsing="false" onAction="#clearBoard" prefHeight="25.0" prefWidth="100.0"
+        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearBoard" prefHeight="25.0" prefWidth="100.0"
                 text="Clear Board">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
             <VBox.margin>
                 <Insets left="10.0" top="10.0"/>
             </VBox.margin>
@@ -43,9 +49,13 @@
                 <ToggleGroup fx:id="toggleGroup"/>
             </fx:define>
             <RadioButton mnemonicParsing="false" onAction="#changePlayerTurn" text="Player X's turn" fx:id="xTurnButton"
-                         toggleGroup="$toggleGroup"/>
+                         toggleGroup="$toggleGroup"/><cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
             <RadioButton mnemonicParsing="false" onAction="#changePlayerTurn" text="Player O's turn" fx:id="oTurnButton"
-                         toggleGroup="$toggleGroup"/>
+                         toggleGroup="$toggleGroup"/><cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
             <VBox.margin>
                 <Insets left="10.0" top="5.0"/>
             </VBox.margin>
@@ -56,31 +66,48 @@
                     <Insets top="10.0"/>
                 </VBox.margin>
             </Label>
-            <ColorPicker editable="false" onAction="#changeXColor" fx:id="xColor"/>
+            <ColorPicker editable="false" onAction="#changeXColor" fx:id="xColor"><cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+            </ColorPicker>
             <Label id="OColorLabel" text="O - Color:">
                 <VBox.margin>
                     <Insets top="10.0"/>
                 </VBox.margin>
             </Label>
-            <ColorPicker fx:id="oColor" editable="false" onAction="#changeOColor"/>
+            <ColorPicker fx:id="oColor" editable="false" onAction="#changeOColor">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </ColorPicker>
             <Label id="backgroundColorLabel" text="Background Color:">
                 <VBox.margin>
                     <Insets top="10.0"/>
                 </VBox.margin>
             </Label>
-            <ColorPicker fx:id="backgroundColor" editable="false" onAction="#changeBackgroundColor"/>
+            <ColorPicker fx:id="backgroundColor" editable="false" onAction="#changeBackgroundColor">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </ColorPicker>
             <Label id="gridColorLabel" text="Grid Color:">
                 <VBox.margin>
                     <Insets top="10.0"/>
                 </VBox.margin>
             </Label>
-            <ColorPicker fx:id="gridColor" editable="false" onAction="#changeGridColor"/>
+            <ColorPicker fx:id="gridColor" editable="false" onAction="#changeGridColor">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </ColorPicker>
             <VBox.margin>
                 <Insets left="10.0" top="10.0"/>
             </VBox.margin>
         </VBox>
         <Button id="resetToDefaultButton" mnemonicParsing="false" onAction="#resetColors" prefHeight="25.0"
-                prefWidth="100.0" text="Reset to default">
+                prefWidth="100.0" text="Reset to default"><cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
             <VBox.margin>
                 <Insets left="10.0" top="25.0"/>
             </VBox.margin>
@@ -96,7 +123,9 @@
                     <Insets right="10.0"/>
                 </VBox.margin>
             </Label>
-            <Button onAction="#resetCounters" prefHeight="25.0" prefWidth="100.0" text="Reset Counters">
+            <Button onAction="#resetCounters" prefHeight="25.0" prefWidth="100.0" text="Reset Counters"><cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
                 <VBox.margin>
                     <Insets right="10.0" top="10.0"/>
                 </VBox.margin>

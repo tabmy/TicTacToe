@@ -8,15 +8,16 @@ package controller;
 import data.TttGame;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import view.TttAppearance;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +30,8 @@ public class TttController implements Initializable {
     private Canvas playerCanvas;
     @FXML
     private Canvas winnerCanvas;
+    @FXML
+    private Button clearButton;
     @FXML
     private ColorPicker xColor;
     @FXML
@@ -99,16 +102,17 @@ public class TttController implements Initializable {
                     drawCircle(rowColPos(event.getX()), rowColPos(event.getY()));
                 }
 
-                changePlayerTurn();
-                //System.out.println(game);
-
                 int[] winner = game.hasWon();
                 if (winner != null) {
                     hasWon = true;
                     for (int i : winner) {
                         drawWinner(i);
                     }
+
                 }
+
+                changePlayerTurn();
+                //System.out.println(game);
             }
         }
     }
@@ -279,7 +283,11 @@ public class TttController implements Initializable {
             break;
         }
         updateWinnerLabels();
+
+        clearButton.setText("Play again!");
+        winnerCanvas.setCursor(Cursor.DEFAULT);
     }
+
 
     private void updateWinnerLabels() {
         byte xWonTimes = game.getxWonTimes();
@@ -333,8 +341,16 @@ public class TttController implements Initializable {
         winnerGc.clearRect(0, 0, 450, 450);
         hasWon = false;
         game = new TttGame();
+
+        clearButton.setText("Clear board");
+        winnerCanvas.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Gets the background and grid Color values from {@link TttAppearance} and uses them to draw the
+     * board(background and grid) on the backgroundCanvas using the bgGc {@link GraphicsContext}
+     *
+     * */
     @FXML
     public void drawBoard() {
         bgGc.setFill(appearance.getBackgroundColor());
@@ -349,6 +365,14 @@ public class TttController implements Initializable {
         bgGc.strokeLine(0, 300, 450, 300); // Second Horizontal line
     }
 
+    /**
+     * Resets the colors to default; <code>Color.BLACK</code> grid and player figures (X and O),
+     * and <code>Color.WHITE</code> background, and resets the game's current board.
+     *
+     * @see Color
+     * @see #clearBoard()
+     * @see #drawBoard()
+     */
     @FXML
     public void resetColors() {
         appearance.setXColor(Color.BLACK);
