@@ -46,4 +46,11 @@ public class TttAppearance {
         this.backgroundColor = backgroundColor;
     }
 
+    public void randomColors(){
+        XColor = new Color(Math.random(),Math.random(), Math.random(), 1);
+        OColor = new Color(Math.random(),Math.random(), Math.random(), 1);
+        gridColor = new Color(Math.random(),Math.random(), Math.random(), 1);
+        backgroundColor = new Color(Math.random(),Math.random(), Math.random(), 1);
+    }
+
 }

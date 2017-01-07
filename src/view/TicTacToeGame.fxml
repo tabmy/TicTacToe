@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.text.Font?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
           prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="controller.TttController">
@@ -114,11 +115,17 @@
         </Button>
         <VBox id="statVBox">
             <Label text="X has won: 0 times." fx:id="xWonTimes">
+                <font>
+                    <Font size="13.0"></Font>
+                </font>
                 <VBox.margin>
                     <Insets right="10.0"/>
                 </VBox.margin>
             </Label>
             <Label fx:id="oWonTimes" text="O has won: 0 times.">
+                <font>
+                    <Font size="13.0"></Font>
+                </font>
                 <VBox.margin>
                     <Insets right="10.0"/>
                 </VBox.margin>

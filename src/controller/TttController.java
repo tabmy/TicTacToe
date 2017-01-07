@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import view.TttAppearance;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -56,6 +55,8 @@ public class TttController implements Initializable {
     private double firstRowCol, middleRowCol, lastRowCol;
     private boolean hasWon = false;
     private char playerTurn = 'X'; // Set to X starting the game as default.
+    private byte figOnBoard = 0;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,7 +74,7 @@ public class TttController implements Initializable {
         resetColors();
     }
 
-    @FXML
+
     public void changePlayerTurn() {
 
         if (playerTurn == 'X') {
@@ -108,12 +109,16 @@ public class TttController implements Initializable {
                     for (int i : winner) {
                         drawWinner(i);
                     }
-
                 }
 
                 changePlayerTurn();
+                figOnBoard++;
+                checkForDraw();
                 //System.out.println(game);
             }
+        }
+        if(event.getButton() == MouseButton.MIDDLE ){
+            randomColors();
         }
     }
 
@@ -282,10 +287,18 @@ public class TttController implements Initializable {
             }
             break;
         }
-        updateWinnerLabels();
 
+        updateWinnerLabels();
         clearButton.setText("Play again!");
         winnerCanvas.setCursor(Cursor.DEFAULT);
+        figOnBoard = 0;
+    }
+
+    private void checkForDraw(){
+        if(figOnBoard == 9){
+            clearButton.setText("Play again!");
+            winnerCanvas.setCursor(Cursor.DEFAULT);
+        }
     }
 
 
@@ -305,37 +318,37 @@ public class TttController implements Initializable {
         }
     }
 
-    @FXML
+
     public void resetCounters() {
         game.clearWonTimes();
         updateWinnerLabels();
     }
 
-    @FXML
+
     public void changeXColor() {
         appearance.setXColor(xColor.getValue());
         drawAll('X');
     }
 
-    @FXML
+
     public void changeOColor() {
         appearance.setOColor(oColor.getValue());
         drawAll('O');
     }
 
-    @FXML
+
     public void changeBackgroundColor() {
         appearance.setBackgroundColor(backgroundColor.getValue());
         drawBoard();
     }
 
-    @FXML
+
     public void changeGridColor() {
         appearance.setGridColor(gridColor.getValue());
         drawBoard();
     }
 
-    @FXML
+
     public void clearBoard() {
         playerGc.clearRect(0, 0, 450, 450);
         winnerGc.clearRect(0, 0, 450, 450);
@@ -351,7 +364,7 @@ public class TttController implements Initializable {
      * board(background and grid) on the backgroundCanvas using the bgGc {@link GraphicsContext}
      *
      * */
-    @FXML
+
     public void drawBoard() {
         bgGc.setFill(appearance.getBackgroundColor());
         bgGc.setStroke(appearance.getGridColor());
@@ -373,7 +386,7 @@ public class TttController implements Initializable {
      * @see #clearBoard()
      * @see #drawBoard()
      */
-    @FXML
+
     public void resetColors() {
         appearance.setXColor(Color.BLACK);
         appearance.setOColor(Color.BLACK);
@@ -387,6 +400,18 @@ public class TttController implements Initializable {
 
         drawBoard();
         clearBoard();
+    }
+
+    private void randomColors(){
+        appearance.randomColors();
+        xColor.setValue(appearance.getXColor());
+        oColor.setValue(appearance.getOColor());
+        backgroundColor.setValue(appearance.getBackgroundColor());
+        gridColor.setValue(appearance.getGridColor());
+        changeXColor();
+        changeOColor();
+        changeBackgroundColor();
+        changeGridColor();
     }
 
 }
