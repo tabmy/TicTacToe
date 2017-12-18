@@ -15,9 +15,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * @author Abelsen, Tommy
- */
+
 public class C4Controller implements Initializable{
 
     private static final Logger LOGGER = Logger.getLogger(C4Controller.class.getName());
@@ -31,8 +29,6 @@ public class C4Controller implements Initializable{
     private GraphicsContext backgroundGc;
     private GraphicsContext playerGc;
     private C4Game game;
-
-    private Paint squareColor;
 
     private int boardrows;
     private int boardcols;
@@ -102,9 +98,11 @@ public class C4Controller implements Initializable{
         for (int i = 0; i < boardrows ; i++) {
             for (int j = 0; j < boardcols; j++) {
                 char square = game.getSquare(i,j);
+                Paint squareColor;
                 if (square == 'R'){ squareColor = Color.DARKRED;}
                 else if (square == 'B'){ squareColor = Color.DARKBLUE;}
-                else {squareColor = Color.GRAY;}
+                else {
+                    squareColor = Color.GRAY;}
 
                 playerGc.setFill(squareColor);
                 playerGc.fillOval( getXpos(j) - 25, getYpos(i) - 25, 50, 50);

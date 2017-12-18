@@ -1,9 +1,5 @@
 package controller;
 
-/**
- * @author Abelsen, Tommy
- */
-
 
 import data.TttGame;
 import javafx.fxml.FXML;

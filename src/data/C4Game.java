@@ -3,10 +3,7 @@ package data;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-/**
- * @author Abelsen, Tommy
- *
- */
+
 public class C4Game {
 
     private static final Logger LOGGER = Logger.getLogger(C4Game.class.getName());
@@ -15,7 +12,7 @@ public class C4Game {
 
     private char[][] gameBoard = new char[height][width];
 
-    public char playerTurn = 'B';
+    private char playerTurn = 'B';
 
     public void changePlayerTurn(){
         if (playerTurn == 'R'){

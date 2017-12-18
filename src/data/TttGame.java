@@ -1,8 +1,5 @@
 package data;
 
-/**
- * @author Abelsen, Tommy
- */
 public class TttGame {
 
     private static byte xWonTimes = 0;
@@ -28,11 +25,8 @@ public class TttGame {
     public int[] hasWon() {
         int winner[] = checkForWinner();
 
-        for (int i = 0; i < winner.length; i++){
-            if (winner[i] > 0) {
-                //System.out.println(winner[i] + "\n");
-                return winner;
-            }
+        for (int w: winner) {
+            if (w > 0) return winner;
         }
         return null;
     }
@@ -120,18 +114,17 @@ public class TttGame {
 
     @Override
     public String toString() {
-        String retString = "";
+        StringBuilder str = new StringBuilder();
         int gameMoveLength = gameMove.length;
 
-        for (int i = 0; i < gameMoveLength; i++) {
-            for (int j = 0; j < gameMoveLength; j++) {
-                retString += gameMove[i][j];
-                if (j == 2) {
-                    retString += "\r\n";
+        for (char[] c: gameMove) {
+            for (int i = 0; i < gameMoveLength ; i++) {
+                str.append(c[i] + " ");
+                if (i == 2){
+                    str.append("\n");
                 }
             }
         }
-
-        return retString;
+        return str.toString();
     }
 }

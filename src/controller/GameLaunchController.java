@@ -6,13 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Created by Tommy on 05.07.2016.
- */
+
 public class GameLaunchController{
 
-    private String ticTacToe = "/view/TicTacToeGame.fxml";
-    private String connect4 = "/view/Connect4Game.fxml";
+    //private String ticTacToe = "/view/TicTacToeGame.fxml";
+    //private String connect4 = "/view/Connect4Game.fxml";
 
 
     public void changeScene(String fxml, String gameTitle){
@@ -40,11 +38,11 @@ public class GameLaunchController{
 
     @FXML
     public void startTicTacToe(){
-        changeScene(ticTacToe, "Tic Tac Toe");
+        changeScene("/view/TicTacToeGame.fxml", "Tic Tac Toe");
     }
 
     @FXML
     public void startConnect4(){
-        changeScene(connect4, "Connect 4");
+        changeScene("/view/Connect4Game.fxml", "Connect 4");
     }
 }

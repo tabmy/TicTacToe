@@ -2,9 +2,7 @@ package view;
 
 import javafx.scene.paint.Color;
 
-/**
- * @author Abelsen, Tommy
- */
+
 public class TttAppearance {
 
     private Color XColor;
