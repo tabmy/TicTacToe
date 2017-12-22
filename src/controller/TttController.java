@@ -350,6 +350,7 @@ public class TttController implements Initializable {
         winnerGc.clearRect(0, 0, 450, 450);
         hasWon = false;
         game = new TttGame();
+        figOnBoard = 0;
 
         clearButton.setText("Clear board");
         winnerCanvas.setCursor(Cursor.HAND);

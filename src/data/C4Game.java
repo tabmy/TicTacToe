@@ -94,17 +94,83 @@ public class C4Game {
         return gameBoard[x][y];
     }
 
+
+
+    public void newBoard() {
+        gameBoard = new char[height][width];
+        fillGameBoard();
+    }
+
+    public boolean hasWon() {
+        return checkWin(playerTurn);
+    }
+
+    private boolean checkWin(char c){
+
+
+        int _height = gameBoard.length;
+        int _width = gameBoard[0].length;
+
+        // vertical check
+        for (int i = 0; i < _height -3 ; i++) {
+            for (int j = 0; j < _width; j++) {
+                if(gameBoard[i][j] == c && gameBoard[i+1][j] == c && gameBoard[i + 2][j] == c && gameBoard[i + 3][j] == c){
+                    return true;
+                }
+
+            }
+        }
+
+        // horizontal check
+
+        for (int i = 0; i < _height ; i++) {
+            for (int j = 0; j < _width - 3; j++) {
+                if(gameBoard[i][j] == c && gameBoard[i][j + 1] == c && gameBoard[i][j + 2] == c && gameBoard[i][j + 3] == c){
+                    return true;
+                }
+            }
+        }
+
+        // diagonal up-right check
+
+        for (int i = 0; i < _height -3; i++) {
+            for (int j = 0; j < _width -3; j++) {
+                if (gameBoard[i][j] == c && gameBoard[i+1][j +1] == c && gameBoard[i + 2][j + 2] == c && gameBoard[i + 3][j + 3] == c){
+                    return true;
+                }
+
+            }
+        }
+
+        // diagonal up-left check
+
+        for (int i = 0; i < _height - 3; i++) {
+            for (int j = 3; j < _width ; j++) {
+                if(gameBoard[i][j] == c && gameBoard[i + 1][j - 1] == c && gameBoard[i + 2][j - 2] == c && gameBoard[i + 3][j - 3] == c){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+
+
     @Override
     public String toString(){
 
-        String retString = "";
+        StringBuilder str = new StringBuilder();
 
-        for (int i = 0; i < height; i++){
-            retString += "\n";
-            for (int j = 0; j < width; j++){
-                retString += gameBoard[i][j];
+        for (char[] c : gameBoard) {
+            for (int i = 0; i < width ; i++) {
+                str.append(c[i]);
             }
+            str.append("\n");
         }
-        return retString;
+        return str.toString();
     }
+
+
 }
